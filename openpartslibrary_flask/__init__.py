@@ -1,37 +1,41 @@
 import os
 
 from flask import Flask
-from flask import render_template, redirect, url_for, session, jsonify, send_from_directory, send_file, session
-
-from flask_cors import CORS
+from flask import render_template
 
 
 app = Flask(__name__)
 
-CORS(app)
-
 # Define the path for the app
 app.config['APP_PATH'] = os.path.dirname(os.path.abspath(__file__))
-print(app.config['APP_PATH'])
 
 # Add secret key
 app.config['SECRET_KEY'] = 'afs87fas7bfsa98fbasbas98fh78oizu'
 
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-''' API
+''' --- API ---
 '''
 
-@app.route('/api/add-new-part')
-def api_add_new_part():
+''' Part
+'''
+@app.route('/api/create-part')
+def api_create_part():
     return 0
 
-''' Views
-'''
+@app.route('/api/read-part')
+def api_read_part():
+    return 0
 
-@app.route('/view/add-new-part')
-def view_add_new_part():
-    return render_template('add-new-part.html')
+@app.route('/api/update-part')
+def api_update_part():
+    return 0
+
+@app.route('/api/delete-part')
+def api_delete_part():
+    return 0
+
+@app.route('/api/read-all-parts')
+def api_read_all_parts():
+    return 0
+
+
