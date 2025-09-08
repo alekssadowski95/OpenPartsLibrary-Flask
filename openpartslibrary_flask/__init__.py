@@ -38,6 +38,7 @@ def api_delete_part():
 def api_read_all_parts():
     return 0
 
+
 ''' --- VIEWS ---
 '''
 
