@@ -2,6 +2,15 @@ import requests
 
 BASE_URL = "http://localhost:5000"
 
+def safe_json(response):
+    print(f"Response Status Code: {response.status_code}")
+    try:
+        return response.json()
+    except Exception:
+        print("Failed to parse JSON response: (status {response.status_code}). Raw response: ")
+        print(response.text)
+        return None
+    
 if __name__ == '__main__':
     print("Starting OpenPartsLibrary Flask Client")
 

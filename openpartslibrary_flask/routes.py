@@ -1,4 +1,4 @@
-from flask import request, jsonify, url_for, app
+from flask import request, jsonify, url_for
 from openpartslibrary.db import PartsLibrary
 from openpartslibrary.models import Part
 import os
@@ -6,7 +6,7 @@ import os
 from . import app
 
 db_path = os.path.join(app.static_folder, 'parts.db')
-p1 = PartsLibrary()
+p1 = PartsLibrary(db_path=db_path)
 
 
 def part_to_dict(part):
