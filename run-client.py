@@ -3,22 +3,20 @@ import requests
 BASE_URL = "http://localhost:5000"
 
 def safe_json(response):
-    print(f"Response Status Code: {response.status_code}")
     try:
         return response.json()
     except Exception:
-        print("Failed to parse JSON response: (status {response.status_code}). Raw response: ")
         print(response.text)
         return None
-    
+   
 if __name__ == '__main__':
     print("Starting OpenPartsLibrary Flask Client")
 
 #Adding sample parts
 sample_parts = [
     {
-        "number": "SCRW - 2001",
-        "name": "Screw Type Z (Special) M5x14",
+            "number": "SCRW - 2001",
+            "name": "Screw Type Z (Special) M5x14",
             "description": "A special kind of screw for safety switches",
             "revision": "1",
             "lifecycle_state": "In Work",
@@ -106,9 +104,13 @@ sample_parts = [
         }
     ]
 
-for part in sample_parts:
+for idx, part in enumerate(sample_parts):
     create_response = requests.post(f"{BASE_URL}/api/create-part", json=part)
-    print("Create Part Response:", create_response.json())
+    result = safe_json(create_response)
+    print(f"Create Part {idx + 1} Response:", result)
+    if create_response.status_code != 201:
+        print("Failed to create part:")
+        break
 
     new_part = {
          "number": "P12345",
@@ -126,25 +128,29 @@ for part in sample_parts:
         "cad_reference": "http://example.com/cad/P12345",
         "attached_documents_reference": "http://example.com/docs/P12345",
         "lead_time": 14,
-        "make_or_buy": "Make",
+        "make_or_buy": "make",
         "supplier": "ABC Supplies",
         "manufacturer_number": "M12345",
         "unit_price": 12.5,
         "currency": "USD"
     }
     create_response = requests.post(f"{BASE_URL}/api/create-part", json=new_part)
-    print("Create Part Response:", create_response.json())
+    result = safe_json(create_response)
+    print("Create Part Response:", result)
+    if create_response.status_code != 201:
+        print("Failed to create part:")
+        exit(1)
 
     response = requests.get(f"{BASE_URL}/api/read-all-parts")
-    print("All Parts:", response.json())
+    print("All Parts:", safe_json(response))
 
     response = requests.get(f"{BASE_URL}/api/read-part/P12345")
-    print("Read Part Response:", response.json())
+    print("Read Part Response:", safe_json(response))
 
     update = {"quantity": 150, "unit_price": 11.0}
     update_response = requests.put(f"{BASE_URL}/api/update-part/P12345", json=update)
-    print("Update Part Response:", response.json())
+    print("Update Part Response:", safe_json(update_response))
 
     delete_response = requests.delete(f"{BASE_URL}/api/delete-part/P12345")
-    print("Delete Part Response:", delete_response.json())
+    print("Delete Part Response:", safe_json(delete_response))
         
