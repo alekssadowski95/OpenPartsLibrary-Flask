@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     BASE_URL = "http://localhost:5000"
 
-    new_part = {
+    new_part_dict = {
         "uuid": str(uuid.uuid4()),
         "number": "SCRW-2001",
         "name": "Screw ISO 4762 M6x12",
@@ -26,7 +26,7 @@ if __name__ == '__main__':
         "unit_price": 0.15,
         "currency": "EUR"
     }
-    create_response = requests.post(f"{BASE_URL}/api/create-part", json=new_part)
+    create_response = requests.post(f"{BASE_URL}/api/create-part", json = new_part_dict)
     print("Create Part Response:", create_response.json())
 
 
@@ -59,7 +59,6 @@ delete_response = requests.delete(f"{BASE_URL}/api/delete-part/P12345")
 print("Delete Part Response:", delete_response.json())
 '''
         
-
 ''' Sample parts
 
 sample_parts = [
